@@ -113,6 +113,12 @@ set_rdr_name(rdr_name_type param, const char *string)
 	case RDR_FORWARD_CHAIN_NAME:
 		nft_forward_chain = string;
 		break;
+	case RDR_NAT_FAMILY_IPV4:
+		if(strcmp(string, "yes") == 0) {
+			nft_nat_family = NFPROTO_IPV4;
+			syslog(LOG_INFO, "using IPv4 NAT Table");
+		}
+		break;
 	default:
 		syslog(LOG_ERR, "%s(): tried to set invalid string parameter: %d", "set_rdr_name", param);
 		return -2;

@@ -73,6 +73,7 @@ static const struct {
 	{ UPNPFORWARDCHAIN, "upnp_forward_chain"},
 	{ UPNPNATCHAIN, "upnp_nat_chain"},
 	{ UPNPNATPOSTCHAIN, "upnp_nat_postrouting_chain"},
+	{ UPNPNFNATFAMILYIPV4, "upnp_nftables_nat_family_ipv4"},
 #endif
 #ifdef ENABLE_NATPMP
 	/* both NAT-PMP and PCP (when PCP is enabled at compile time) */
