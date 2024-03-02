@@ -197,9 +197,9 @@ add_redirect_rule2(const char * ifname,
 	d_printf(("add redirect rule2(%s, %s, %u, %s, %u, %d, %s)!\n",
 	          ifname, rhost, eport, iaddr, iport, proto, desc));
 
-	r = rule_set_dnat(NFPROTO_INET, ifname, proto,
-	                  0, eport,
-	                  inet_addr(iaddr), iport,  desc, NULL);
+	r = rule_set_dnat(nft_nat_family, ifname, proto,
+					  0, eport,
+					  inet_addr(iaddr), iport, desc, NULL);
 
 	ret = nft_send_rule(r, NFT_MSG_NEWRULE, RULE_CHAIN_REDIRECT);
 	if (ret >= 0) {
@@ -226,10 +226,10 @@ add_peer_redirect_rule2(const char * ifname,
 
 	d_printf(("add peer redirect rule2()!\n"));
 
-	r = rule_set_snat(NFPROTO_INET, proto,
-	                  inet_addr(rhost), rport,
-	                  inet_addr(eaddr), eport,
-	                  inet_addr(iaddr), iport, desc, NULL);
+	r = rule_set_snat(nft_nat_family, proto,
+					  inet_addr(rhost), rport,
+					  inet_addr(eaddr), eport,
+					  inet_addr(iaddr), iport, desc, NULL);
 
 	return nft_send_rule(r, NFT_MSG_NEWRULE, RULE_CHAIN_PEER);
 }
@@ -255,10 +255,10 @@ add_filter_rule2(const char * ifname,
 	if (rhost != NULL && strcmp(rhost, "") != 0 && strcmp(rhost, "*") != 0) {
 		rhost_addr = inet_addr(rhost);
 	}
-	r = rule_set_filter(NFPROTO_INET, ifname, proto,
-	                    rhost_addr, inet_addr(iaddr),
-	                    eport, iport, 0,
-	                    desc, 0);
+	r = rule_set_filter(nft_nat_family, ifname, proto,
+						rhost_addr, inet_addr(iaddr),
+						eport, iport, 0,
+						desc, 0);
 
 	return nft_send_rule(r, NFT_MSG_NEWRULE, RULE_CHAIN_FILTER);
 }
